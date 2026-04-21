@@ -72,11 +72,11 @@ export default function AddContactPage() {
     }
 
     return (
-        <div className="flex-1 md:p-10 p-5">
+        <div className="flex-1 md:p-4 p-5">
             <header className="flex flex-row justify-between items-center mb-10">
                 <Button
                     onClick={() => router.back()}
-                    className="flex flex-row gap-2 items-center py-5 bg-blue-500 hover:bg-blue-600 text-white md:text-lg"
+                    className="flex flex-row gap-2 items-center py-5 bg-blue-600 hover:bg-blue-700 text-white md:text-lg"
                 >
                     <ArrowLeft />
                     Voltar
