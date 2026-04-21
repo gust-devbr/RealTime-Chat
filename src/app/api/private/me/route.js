@@ -10,7 +10,7 @@ export async function GET(req) {
         const findUser = await userService.getById(user.id);
         if (!findUser) return Response.error("Usuário não encontrado", null, 404);
 
-        return Response.success({ user });
+        return Response.success({ user: findUser });
     } catch (error) {
         return Response.error("Erro ao buscar usuário", error);
     }
