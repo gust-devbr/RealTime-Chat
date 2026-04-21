@@ -35,7 +35,7 @@ model Contact {
   contactId String @db.ObjectId
 
   user    User @relation("UserContacts", fields: [userId], references: [id], onDelete: Cascade)
-  contact User @relation("UserContactList", fields: [contactId], references: [id])
+  contact User @relation("UserContactList", fields: [contactId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 }
