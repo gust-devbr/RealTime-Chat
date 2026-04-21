@@ -13,9 +13,24 @@ export const userService = {
                 id: true,
                 name: true,
                 phone: true,
+                password: true,
                 createdAt: true
             }
         });
+    },
+
+    delete: async (id) => {
+        await prisma.user.delete({ where: { id } });
+    },
+
+    update: async (id, name, phone) => {
+        await prisma.user.update({
+            where: { id },
+            data: {
+                ...(name !== undefined && { name }),
+                ...(phone !== undefined && { phone }),
+            }
+        })
     },
 
     create: async (name, phone, password) => {
