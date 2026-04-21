@@ -27,12 +27,12 @@ export default function ContactsPage() {
     }, [])
 
     return (
-        <div className="flex-1 md:p-10 p-5">
+        <div className="flex-1 md:p-4 p-5">
             <header className="flex flex-row justify-between items-center mb-10">
                 <h1 className="text-3xl font-serif">Contatos</h1>
                 <Button
                     onClick={() => router.push("/screens/contacts/add")}
-                    className="flex flex-row gap-2 items-center py-5 bg-blue-500 hover:bg-blue-600 text-white text-lg"
+                    className="flex flex-row gap-2 items-center py-5 bg-blue-600 hover:bg-blue-700 text-white text-lg"
                 >
                     <Plus size={40} />
                     Adicionar contato
