@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
             try {
                 setLoading(true);
                 const res = await apiFetch("/private/me");
-                setUser(res.data.user || res.data.data.user);
+                setUser(res?.data?.user || res?.data?.data?.user);
             } catch (error) {
                 console.error(error);
             } finally {
