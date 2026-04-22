@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useCallback } from "react";
 import { apiFetch } from "@/utils/api";
 import { useRouter } from "next/navigation";
 
@@ -12,20 +12,21 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const loadUser = useCallback(async () => {
+        try {
+            setLoading(true);
+            const res = await apiFetch("/private/me");
+            setUser(res?.data?.user || res?.data?.data?.user);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
-        async function loadUser() {
-            try {
-                setLoading(true);
-                const res = await apiFetch("/private/me");
-                setUser(res?.data?.user || res?.data?.data?.user);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        };
         loadUser();
-    }, [])
+    }, [loadUser])
 
     async function login(phone, password) {
         try {
@@ -58,7 +59,7 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+        <AuthContext.Provider value={{ user, loading, loadUser, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     )

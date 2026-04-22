@@ -8,10 +8,11 @@ import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { UpdateUserDialog } from "@/components/dialog/UpdateUser"
 import { DeleteAccountDialog } from "@/components/dialog/DeleteAccount"
+import { useEffect } from "react"
 
 export default function SettingsPage() {
     const router = useRouter()
-    const { user } = useAuth()
+    const { user, loading } = useAuth()
 
     return (
         <div className="flex-1 md:p-4 p-5 space-y-5">
@@ -23,24 +24,24 @@ export default function SettingsPage() {
             <Card>
                 <CardContent className="flex md:flex-row md:justify-between flex-col gap-4">
                     <section className="flex flex-1 flex-col justify-center items-center gap-3">
-                        <Avatar className="w-30 h-30 items-center">
+                        <Avatar className="w-60 h-60 items-center">
                             <AvatarImage
                                 src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
                                 alt="user-icon"
                             />
                         </Avatar>
-                        <div className="flex flex-col justify-center items-center">
-                            <p className="text-xl">Nome Completo: {user?.name}</p>
-                            <p className="text-zinc-500 text-lg">Telefone: {user?.phone}</p>
-                        </div>
                     </section>
 
                     <section className="space-y-2 px-3 md:w-260">
                         <Label className="text-lg -mb-1" htmlFor="name">Nome</Label>
-                        <p className="border py-3 px-2 rounded-lg bg-zinc-100 text-lg">{user?.name}</p>
+                        <p className="border py-3 px-2 rounded-lg bg-zinc-100 text-lg">
+                            {loading && !user ? "Carregando..." : user?.name}
+                        </p>
 
                         <Label className="text-lg -mb-1" htmlFor="phone">Telefone</Label>
-                        <p className="border py-3 px-2 rounded-lg bg-zinc-100 text-lg">{user?.phone}</p>
+                        <p className="border py-3 px-2 rounded-lg bg-zinc-100 text-lg">
+                            {loading && !user ? "Carregando..." : user?.phone}
+                        </p>
 
                         <footer>
                             <UpdateUserDialog />
