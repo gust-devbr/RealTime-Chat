@@ -5,8 +5,10 @@ import { Button } from "../ui/button"
 import { ChevronsUpDown, Cog, Ellipsis, Pin, PinOff } from "lucide-react"
 import { DeleteContactDialog } from "../dialog/DeleteContact"
 import { LogoutDialog } from "../dialog/Logout"
+import { useRouter } from "next/navigation"
 
 export function UserOptionPortal() {
+    const router = useRouter()
 
     return (
         <Popover>
@@ -19,7 +21,7 @@ export function UserOptionPortal() {
             <PopoverContent className="w-40">
                 <LogoutDialog />
 
-                <Button variant="ghost" className="text-lg">
+                <Button variant="ghost" className="text-lg" onClick={() => router.push("/screens/settings")}>
                     <Cog className="w-5! h-5!" />
                     Configurações
                 </Button>

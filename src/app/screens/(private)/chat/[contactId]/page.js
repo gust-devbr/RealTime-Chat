@@ -53,6 +53,8 @@ export default function ChatPage() {
             if (!res.ok) {
                 toast.error(res.message)
             }
+
+            setMessage("")
         } catch (error) {
             console.error(error)
         }
