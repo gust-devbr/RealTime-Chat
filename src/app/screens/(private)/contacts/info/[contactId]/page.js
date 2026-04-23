@@ -21,7 +21,7 @@ export default function InfoContactPage() {
         async function loadContact() {
             try {
                 const res = await apiFetch(`/private/contact/${contactId}`, { method: "GET" })
-                setContact(res.data.contact || res.data.data.contact || null)
+                setContact(res?.contact || res?.data?.contact || res?.data?.data?.contact || null)
             } catch (error) {
                 console.error(error)
             }
