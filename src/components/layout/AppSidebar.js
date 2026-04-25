@@ -42,7 +42,7 @@ export function AppSidebar() {
                     <section className="flex flex-row gap-2">
                         <Avatar className="w-13 h-13">
                             <AvatarImage
-                                src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                                src={user?.avatar || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"}
                                 alt="user-icon"
                             />
                         </Avatar>

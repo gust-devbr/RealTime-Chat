@@ -35,7 +35,7 @@ export default function InfoContactPage() {
                 <section>
                     <Avatar className="w-30 h-30 items-center">
                         <AvatarImage
-                            src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                            src={contact?.avatar || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"}
                             alt="user-icon"
                         />
                     </Avatar>
