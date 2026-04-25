@@ -8,11 +8,45 @@ import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 import { UpdateUserDialog } from "@/components/dialog/UpdateUser"
 import { DeleteAccountDialog } from "@/components/dialog/DeleteAccount"
-import { useEffect } from "react"
+import { useRef, useState } from "react"
+import { AvatarOptionsPortal } from "@/components/portal/AvatarOptions"
 
 export default function SettingsPage() {
     const router = useRouter()
     const { user, loading } = useAuth()
+
+    const fileRef = useRef(null)
+    const [preview, setPreview] = useState(null)
+    const [uploading, setUploading] = useState(false)
+
+    async function handleSelect(e) {
+        const file = e.target.files[0]
+        if (!file) return
+
+        const localUrl = URL.createObjectURL(file)
+        setPreview(localUrl)
+
+        try {
+            setUploading(true)
+
+            const formData = new FormData()
+            formData.append("file", file)
+
+            const res = await fetch("/api/private/avatar/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+
+            setPreview(data.url)
+            window.location.reload()
+        } catch (err) {
+            console.error(err)
+        } finally {
+            setUploading(false)
+        }
+    }
 
     return (
         <div className="flex-1 md:p-4 p-5 space-y-5">
@@ -24,12 +58,34 @@ export default function SettingsPage() {
             <Card>
                 <CardContent className="flex md:flex-row md:justify-between flex-col gap-4">
                     <section className="flex flex-1 flex-col justify-center items-center gap-3">
-                        <Avatar className="w-60 h-60 items-center">
-                            <AvatarImage
-                                src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
-                                alt="user-icon"
-                            />
-                        </Avatar>
+                        <div className="relative cursor-pointer">
+                            <Avatar className="w-60 h-60">
+                                <AvatarImage
+                                    src={
+                                        preview ||
+                                        user?.avatar ||
+                                        "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+                                    }
+                                    alt="user-avatar"
+                                />
+                            </Avatar>
+
+                            <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-1 py-1 rounded">
+                                {uploading
+                                    ? "Enviando..."
+                                    : (
+                                        <AvatarOptionsPortal onUpload={() => fileRef.current.click()} />
+                                    )}
+                            </div>
+                        </div>
+
+                        <input
+                            type="file"
+                            ref={fileRef}
+                            hidden
+                            accept="image/*"
+                            onChange={handleSelect}
+                        />
                     </section>
 
                     <section className="space-y-2 px-3 md:w-260">

@@ -2,6 +2,7 @@ import { Response } from "next-lib-utils";
 import { userService } from "@/services/userService";
 import { getUserFromToken } from "@/utils/auth";
 import bcrypt from "bcryptjs";
+import cloudinary from "@/lib/cloudinary";
 
 export async function DELETE(req) {
     try {
@@ -16,6 +17,9 @@ export async function DELETE(req) {
         const valid = await bcrypt.compare(password, exist.password);
         if (!valid) return Response.error("Senha incorreta", null, 401);
 
+        if (exist.avatarId) {
+            await cloudinary.uploader.destroy(exist.avatarId);
+        }
         await userService.delete(user.id);
 
         return Response.success(null, "Conta excluída com sucesso");

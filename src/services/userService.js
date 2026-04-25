@@ -7,16 +7,7 @@ export const userService = {
     },
 
     getById: async (id) => {
-        return await prisma.user.findFirst({
-            where: { id },
-            select: {
-                id: true,
-                name: true,
-                phone: true,
-                password: true,
-                createdAt: true
-            }
-        });
+        return await prisma.user.findFirst({ where: { id } });
     },
 
     delete: async (id) => {

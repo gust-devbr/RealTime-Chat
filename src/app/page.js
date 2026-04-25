@@ -15,5 +15,5 @@ export default function Home() {
       router.replace("/screens/contacts")
     }
   }, [])
-  
+
 }
